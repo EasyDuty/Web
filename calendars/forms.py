@@ -5,4 +5,4 @@ class ApplyOffForm(forms.ModelForm):
 
     class Meta:
         model = ApplyOff
-        fields = ('day')
+        fields = ('day',)

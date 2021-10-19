@@ -12,7 +12,7 @@ def signup(request):
         form = NurseForm(request.POST)
         if form.is_valid():
             form.save()
-            return 
+            return redirect('calendars:main')
     else:
         form = NurseForm()
     context = {
@@ -57,7 +57,7 @@ def update(request):
         form = NurseChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('articles:index')
+            return redirect('calendars:main')
     else:
         form = NurseChangeForm(instance=request.user)
     context = {

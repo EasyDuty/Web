@@ -3,5 +3,5 @@ from django.conf import settings
 
 
 class ApplyOff(models.Model):
-    day = models.DateField()
+    day = models.DateTimeField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
