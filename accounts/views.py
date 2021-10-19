@@ -3,10 +3,10 @@ from .forms import NurseChangeForm, NurseForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.views.decorators.http import require_POST, require_http_methods
 
 
-
-# Create your views here.
+@require_http_methods(['GET', 'POST'])
 def signup(request):
     if request.method == 'POST':
         form = NurseForm(request.POST)
@@ -20,6 +20,8 @@ def signup(request):
     }
     return render(request, 'accounts/signup.html', context)
 
+
+@require_http_methods(['GET', 'POST'])
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -35,11 +37,13 @@ def login(request):
     return render(request, 'accounts/login.html', context)
 
 
+@require_POST
 def logout(request):
     auth_logout(request)
     return redirect('calendars:main')
 
 
+@require_POST
 def delete(request):
     if request.user.is_authenticated:
         request.user.delete()
@@ -47,6 +51,7 @@ def delete(request):
     return redirect('calendars:main')
 
 
+@require_http_methods(['GET', 'POST'])
 def update(request):
     if request.method == 'POST':
         form = NurseChangeForm(request.POST, instance=request.user)
