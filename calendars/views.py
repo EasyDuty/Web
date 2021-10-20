@@ -33,7 +33,7 @@ def apply_off(request):
     else:
         form = ApplyOffForm()
     context = {
-
+        'form': form,
     }
     return render(request, 'calendars/apply-off.html', context)
 
