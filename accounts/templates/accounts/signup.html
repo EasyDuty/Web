@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-<h1>signup</h1>
-<hr>
-<form action=""method='POST'>
-{% csrf_token %}
-{{ form.as_p}}
-<button>가입</button>
-</form>
-
+  <h1>회원가입</h1>
+  <hr>
+  <form action="{% url 'accounts:signup' %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    <p>아이디: {{ form.username }}</p>
+    <p>비밀번호: {{ form.password1 }}</p>
+    <p>비밀번호 확인: {{ form.password2 }}</p>
+    <p>이름: {{ form.name }}</p>
+    {% comment %} 나이가 아닌 생년월일을 기록하여 나이 계산 필요 {% endcomment %}
+    <p>생년월일: {{ form.age }}</p>
+    {% comment %} 경력이 아닌 입사일(or 입사년도)을 기록하여 경력 계산 필요 {% endcomment %}
+    <p>입사일: {{ form.career }}</p>
+    <p>소속 팀: {{ form.team }}</p>
+    <p>소속 병동: {{ form.ward }}</p>
+    <p>소속 병원: {{ form.hospital }}</p>
+    <button type="submit" class="btn btn-warning">회원가입</button>
+  </form>
+  <button type="button" class="btn btn-primary hBack">뒤로</button>
 {% endblock content %}

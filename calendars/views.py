@@ -6,6 +6,7 @@ from .forms import ApplyOffForm
 
 @require_safe
 def main(request):
+    # 인증되어 있지 않다면 로그인 창으로 유도
     context = {
 
     }

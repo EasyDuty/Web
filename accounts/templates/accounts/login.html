@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-<h1>login</h1>
-<hr>
-<form action=""method='POST'>
-{% csrf_token %}
-{{ form.as_p}}
-<button>로그인</button>
-</form>
-
+  <h1>로그인</h1>
+  <hr>
+  <form action="{% url 'accounts:login' %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    <p>아이디: {{ form.username }}</p>
+    <p>비밀번호: {{ form.password }}</p>
+    <button type="submit" class="btn btn-primary">회원가입</button>
+  </form>
 {% endblock content %}
