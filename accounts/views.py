@@ -53,6 +53,7 @@ def delete(request):
 
 @require_http_methods(['GET', 'POST'])
 def update(request):
+    # 인증한 사용자만 접근하도록 바꿔야 함
     if request.method == 'POST':
         form = NurseChangeForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -64,3 +65,6 @@ def update(request):
         'form': form,
     }
     return render(request, 'accounts/update.html', context)
+
+
+# 프로필 함수 필요

@@ -10,3 +10,4 @@ urlpatterns = [
     path('update/', views.update, name='update'),
 
 ]
+# 프로필 url 필요
