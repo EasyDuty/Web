@@ -4,11 +4,24 @@ from django.contrib.auth.decorators import login_required
 from .forms import ApplyOffForm
 
 
+@login_required
 @require_safe
 def main(request):
     # 인증되어 있지 않다면 로그인 창으로 유도
-    context = {
+    data = list('DODODEDDNDDNDDDNDDODDEDDDODDND')
+    duties = []
+    for duty in data:
+        if duty == 'D':
+            duties.append('DAY')
+        elif duty == 'O':
+            duties.append('OFF')
+        elif duty == 'N':
+            duties.append('NIGHT')
+        else:
+            duties.append('EVENING')
 
+    context = {
+        'duties': duties,
     }
     return render(request, 'calendars/main.html', context)
 

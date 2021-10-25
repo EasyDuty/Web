@@ -6,8 +6,8 @@
   <hr>
 
   {% for duty in duties %}
-    <span>duty</span>
-    {% if not forloop.counter % 7 %}
+    <span>{{ duty }}</span>
+    {% if forloop.counter|divisibleby:7 %}
       <br>
     {% endif %}
   {% endfor %}
