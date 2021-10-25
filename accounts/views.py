@@ -14,6 +14,7 @@ def signup(request):
         form = NurseForm(request.POST)
         if form.is_valid():
             form.save()
+            auth_login(request, form.get_user())
             return redirect('calendars:main')
     else:
         form = NurseForm()
@@ -55,7 +56,8 @@ def delete(request):
 
 @require_http_methods(['GET', 'POST'])
 def update(request):
-    # 인증한 사용자만 접근하도록 바꿔야 함
+    if not request.user.is_authticated:
+        return redirect('accounts:login')
     if request.method == 'POST':
         form = NurseChangeForm(request.POST, instance=request.user)
         if form.is_valid():
