@@ -2,13 +2,15 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ApplyOffForm
+from .algo import makes_duty
 
 
+@login_required
 @require_safe
 def main(request):
-    # 인증되어 있지 않다면 로그인 창으로 유도
+    duties = list('DODODEDDNDDNDDDNDDODDEDDDODDND')
     context = {
-
+        'duties': duties,
     }
     return render(request, 'calendars/main.html', context)
 
@@ -44,6 +46,7 @@ def apply_off(request):
 def make_duty(request):
     if request.method=='POST':
         pass
+        # makes_duty(prev_month_duty, year, month)
     else:
         pass
     context = {

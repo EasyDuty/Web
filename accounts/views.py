@@ -56,7 +56,7 @@ def delete(request):
 
 @require_http_methods(['GET', 'POST'])
 def update(request):
-    if not request.user.is_authticated:
+    if not request.user.is_authenticated:
         return redirect('accounts:login')
     if request.method == 'POST':
         form = NurseChangeForm(request.POST, instance=request.user)
