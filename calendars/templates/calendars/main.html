@@ -2,17 +2,5 @@
 
 
 {% block content %}
-<p>{{ user }}</p>
-<a href="{% url 'accounts:login' %}">login</a>
-<a href="{% url 'accounts:signup' %}">signup</a>
-<form action="{% url 'accounts:logout' %}" method='POST'>
-{% csrf_token %}
-<button>logout</button>
-</form>
-<form action="{% url 'accounts:delete' %}" method='POST'>
-{% csrf_token %}
-<button>delete</button>
-</form>
-<a href="{% url 'accounts:update' %}">update</a>
-<a href="{% url 'calendars:apply-off' %}">adad</a>
+  
 {% endblock content %}

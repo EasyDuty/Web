@@ -5,10 +5,9 @@
   <hr>
   <form action="{% url 'accounts:signup' %}" method="POST" class="d-inline">
     {% csrf_token %}
+    <p>아이디: {{ form.username }}</p>
     <p>이름: {{ form.name }}</p>
-    {% comment %} 나이가 아닌 생년월일을 기록하여 나이 계산 필요 {% endcomment %}
-    <p>생년월일: {{ form.age }}</p>
-    {% comment %} 경력이 아닌 입사일(or 입사년도)을 기록하여 경력 계산 필요 {% endcomment %}
+    <p>생년월일: {{ form.birth }}</p>
     <p>입사일: {{ form.career }}</p>
     <p>소속 팀: {{ form.team }}</p>
     <p>소속 병동: {{ form.ward }}</p>

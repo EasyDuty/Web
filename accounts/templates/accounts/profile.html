@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ user }}님, 환영합니다!</h1>
+  <h1>{{ person.name }}님, 환영합니다!</h1>
   <hr>
-  
+  {% comment %} user 객체: person {% endcomment %}
+  <p>이름: {{ person.name }}</p>
+  <p>생년월일: {{ person.birth }}</p>
+  <p>입사일: {{ person.career }}</p>
+  <p>병원: {{ person.hospital }}</p>
+  <p>병동: {{ person.ward }}</p>
+  <p>팀: {{ person.team}}</p>
+  <hr>
+  <a href="{% url 'accounts:update'  %}">정보 수정</a>
 
 {% endblock content %}
