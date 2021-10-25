@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import NurseChangeForm, NurseForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import get_user_model, login as auth_login
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.views.decorators.http import require_POST, require_http_methods
+from django.contrib.auth.decorators import login_required
 
 
 @require_http_methods(['GET', 'POST'])
@@ -67,10 +69,26 @@ def update(request):
     return render(request, 'accounts/update.html', context)
 
 
-# 프로필 함수 필요
+
 def profile(request, username):
     person = get_object_or_404(get_user_model(), username=username)
     context = {
         'person': person,
     }
     return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('calendars:index')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/change_password.html', context)
