@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import NurseChangeForm, NurseForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import get_user_model, login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.views.decorators.http import require_POST, require_http_methods
 
@@ -68,3 +68,9 @@ def update(request):
 
 
 # 프로필 함수 필요
+def profile(request, username):
+    person = get_object_or_404(get_user_model(), username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)

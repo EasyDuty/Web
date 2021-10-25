@@ -12,7 +12,7 @@ class NurseForm(UserCreationForm):
             'password1',
             'password2',
             'name',
-            'age',
+            'birth',
             'career',
             'ward',
             'team',
@@ -25,7 +25,7 @@ class NurseChangeForm(UserChangeForm):
         model = get_user_model()
         fields = (
             'name',
-            'age',
+            'birth',
             'career',
             'ward',
             'team',
