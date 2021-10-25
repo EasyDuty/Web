@@ -3,9 +3,9 @@
 {% block content %}
   <h1>회원정보 수정</h1>
   <hr>
-  <form action="{% url 'accounts:signup' %}" method="POST" class="d-inline">
+  <form action="{% url 'accounts:update' %}" method="POST" class="d-inline">
     {% csrf_token %}
-    <p>아이디: {{ form.username }}</p>
+    <p>아이디: {{ user.username }}</p>
     <p>이름: {{ form.name }}</p>
     <p>생년월일: {{ form.birth }}</p>
     <p>입사일: {{ form.career }}</p>

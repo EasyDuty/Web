@@ -22,24 +22,25 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{% url 'accounts:profile' %}" class="fs-2 me-2">{{ user }}</a>님
-            </li>
+            <li class="nav-item mx-4">
+              <a href="{% url 'accounts:profile' request.user.username %}" class="text-decoration-none">
+                <button class="btn text-success">{{ request.user.name }}</button>
+              </a>님
             <li class="nav-item">
               <form action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
-                <button class="btn btn-link btn-warning text-decoration-none text-light me-2">로그아웃</button>
+                <button class="btn btn-warning text-decoration-none text-light me-2">로그아웃</button>
               </form>
             </li>
           {% else %}
             <li class="nav-item">
               <a href="{% url 'accounts:signup' %}">
-                <button class="btn btn-link btn-warning text-decoration-none text-light me-2">회원가입</button>
+                <button class="btn btn-warning text-decoration-none text-light me-2">회원가입</button>
               </a>
             </li>
             <li class="nav-item">
               <a href="{% url 'accounts:login' %}">
-                <button class="btn btn-link btn-warning text-decoration-none text-light me-2">로그인</button>
+                <button class="btn btn-warning text-decoration-none text-light me-2">로그인</button>
               </a>
             </li>
           {% endif %}

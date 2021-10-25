@@ -2,5 +2,13 @@
 
 
 {% block content %}
-  
+  <h1>{{ user.name }} 님의 DUTY!</h1>
+  <hr>
+
+  {% for duty in duties %}
+    <span>duty</span>
+    {% if not forloop.counter % 7 %}
+      <br>
+    {% endif %}
+  {% endfor %}
 {% endblock content %}
