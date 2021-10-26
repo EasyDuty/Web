@@ -9,10 +9,8 @@
     <p>비밀번호: {{ form.password1 }}</p>
     <p>비밀번호 확인: {{ form.password2 }}</p>
     <p>이름: {{ form.name }}</p>
-    {% comment %} 나이가 아닌 생년월일을 기록하여 나이 계산 필요 {% endcomment %}
-    <p>생년월일: {{ form.birth }}</p>
-    {% comment %} 경력이 아닌 입사일(or 입사년도)을 기록하여 경력 계산 필요 {% endcomment %}
-    <p>입사일: {{ form.career }}</p>
+    <p>생년월일: {{ form.birth }} 'YYYY-MM-DD 형식'</p>
+    <p>입사일: {{ form.career }} 'YYYY-MM-DD 형식'</p>
     <p>소속 팀: {{ form.team }}</p>
     <p>소속 병동: {{ form.ward }}</p>
     <p>소속 병원: {{ form.hospital }}</p>
