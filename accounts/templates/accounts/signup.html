@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 
 {% block content %}
   <h1>회원가입</h1>
   <hr>
-  <form action="{% url 'accounts:signup' %}" method="POST" class="d-inline">
+  <form action="{% url 'accounts:signup' %}" method="POST">
     {% csrf_token %}
-    <p>아이디: {{ form.username }}</p>
-    <p>비밀번호: {{ form.password1 }}</p>
-    <p>비밀번호 확인: {{ form.password2 }}</p>
-    <p>이름: {{ form.name }}</p>
-    <p>생년월일: {{ form.birth }} 'YYYY-MM-DD 형식'</p>
-    <p>입사일: {{ form.career }} 'YYYY-MM-DD 형식'</p>
-    <p>소속 팀: {{ form.team }}</p>
-    <p>소속 병동: {{ form.ward }}</p>
-    <p>소속 병원: {{ form.hospital }}</p>
-    <button type="submit" class="btn btn-warning">회원가입</button>
+    {% bootstrap_form form %}
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-warning text-light submit_btn">회원가입</button>
+    </div>
   </form>
-  <button type="button" class="btn btn-primary hBack">뒤로</button>
 {% endblock content %}
