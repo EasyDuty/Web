@@ -8,11 +8,13 @@ from .algo import makes_duty
 @login_required
 @require_safe
 def main(request):
-    duties = list('DODODEDDNDDNDDDNDDODDEDDDODDND')
-    context = {
-        'duties': duties,
-    }
-    return render(request, 'calendars/main.html', context)
+    if request.user.duty:
+        duties = request.user.duty
+        context = {
+            'duties': duties,
+        }
+        return render(request, 'calendars/main.html', context)
+    return redirect('calendars:make-duty')
 
 
 @login_required
@@ -49,10 +51,12 @@ def make_duty(request):
         month = int(request.POST['month'])
         prev_month_duty = request.POST['dd']
         duty = makes_duty(prev_month_duty, year, month)
+        request.user.duty = duty
         context = {
             'duties': duty,
         }
-        return render(request, 'calendars/main.html', context)
+        return redirect('calendars:main')
+
     else:
         pass
     context = {
