@@ -45,8 +45,14 @@ def apply_off(request):
 @require_http_methods(['GET', 'POST'])
 def make_duty(request):
     if request.method=='POST':
-        pass
-        # makes_duty(prev_month_duty, year, month)
+        year = int(request.POST['year'])
+        month = int(request.POST['month'])
+        prev_month_duty = request.POST['dd']
+        duty = makes_duty(prev_month_duty, year, month)
+        context = {
+            'duties': duty,
+        }
+        return render(request, 'calendars/main.html', context)
     else:
         pass
     context = {
