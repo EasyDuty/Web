@@ -2,17 +2,19 @@
 
 
 {% block content %}
-<p>{{ user }}</p>
-<a href="{% url 'accounts:login' %}">login</a>
-<a href="{% url 'accounts:signup' %}">signup</a>
-<form action="{% url 'accounts:logout' %}" method='POST'>
-{% csrf_token %}
-<button>logout</button>
-</form>
-<form action="{% url 'accounts:delete' %}" method='POST'>
-{% csrf_token %}
-<button>delete</button>
-</form>
-<a href="{% url 'accounts:update' %}">update</a>
-<a href="{% url 'calendars:apply-off' %}">adad</a>
+  <h1>{{ user.name }} 님의 DUTY!</h1>
+  <hr>
+    <div class="container">
+      <div class="row">
+      {% for duty in duties %}
+        {% if forloop.counter|divisibleby:7 %}
+          <div class="border text-center" style="width: 14%; height: 100px;">{{ duty }}</div>
+          {% comment %} <div class="offset"></div> {% endcomment %}
+        {% else %}
+          <div class="border text-center" style="width: 14%; height: 100px;">{{ duty }}</div>
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+  </article>
 {% endblock content %}

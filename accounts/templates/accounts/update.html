@@ -1,19 +1,12 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 
 {% block content %}
   <h1>회원정보 수정</h1>
   <hr>
-  <form action="{% url 'accounts:signup' %}" method="POST" class="d-inline">
+  <form action="{% url 'accounts:update' %}" method="POST" class="d-inline">
     {% csrf_token %}
-    <p>이름: {{ form.name }}</p>
-    {% comment %} 나이가 아닌 생년월일을 기록하여 나이 계산 필요 {% endcomment %}
-    <p>생년월일: {{ form.birth }}</p>
-    {% comment %} 경력이 아닌 입사일(or 입사년도)을 기록하여 경력 계산 필요 {% endcomment %}
-    <p>입사일: {{ form.career }}</p>
-    <p>소속 팀: {{ form.team }}</p>
-    <p>소속 병동: {{ form.ward }}</p>
-    <p>소속 병원: {{ form.hospital }}</p>
+    {% bootstrap_form form %}
     <button type="submit" class="btn btn-primary">정보 수정</button>
   </form>
-  <button type="button" class="btn btn-primary hBack">뒤로</button>
 {% endblock content %}
