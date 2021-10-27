@@ -1,15 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.forms import widgets
+from .widgets import DatePickerWidget
 
 class NurseForm(UserCreationForm):
     name = forms.CharField(max_length=100, label='이름')
-    birth = forms.DateField(label='생년월일', widget=forms.TextInput(attrs={
-        'placeholder': 'yyyy-mm-dd'
-    }))
-    career = forms.DateField(label='입사일', widget=forms.TextInput(attrs={
-        'placeholder': 'yyyy-mm-dd'
-    }))
+    birth = forms.DateField(label='생년월일', widget=DatePickerWidget)
+    career = forms.DateField(label='입사일', widget=DatePickerWidget)
     ward = forms.CharField(max_length=100, label='병동')
     team = forms.CharField(max_length=100, label='팀')
     hospital = forms.CharField(max_length=100, label='병원')
@@ -27,15 +25,12 @@ class NurseForm(UserCreationForm):
             'team',
             'hospital',
         )
+        
 
 class NurseChangeForm(UserChangeForm):
     name = forms.CharField(max_length=100, label='이름')
-    birth = forms.DateField(label='생년월일', widget=forms.TextInput(attrs={
-        'placeholder': 'yyyy-mm-dd'
-    }))
-    career = forms.DateField(label='입사일', widget=forms.TextInput(attrs={
-        'placeholder': 'yyyy-mm-dd'
-    }))
+    birth = forms.DateField(label='생년월일', widget=DatePickerWidget)
+    career = forms.DateField(label='입사일', widget=DatePickerWidget)
     ward = forms.CharField(max_length=100, label='병동')
     team = forms.CharField(max_length=100, label='팀')
     hospital = forms.CharField(max_length=100, label='병원')

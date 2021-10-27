@@ -36,4 +36,14 @@ Duty 생성 페이지 구현
 
   forms.py에서 label을 이용해 나머지 필드도 한글로 출력해줌
 
+* Date picker 구현
+
+  다양한 방법이 있는데, 일단 jquery의 datepicker을 이용하여 widget으로 구현.
+
+  django-datepicker도 있던데 어떤 것을 사용할지 고민해 봐야할 듯
+
+* Date picker과 자동완성이 같이 나오는 문제.
+
+  setAttribute('autocomplete', 'off') 을 통해 해결.
+  
   
