@@ -52,6 +52,7 @@ def make_duty(request):
         prev_month_duty = request.POST['dd']
         duty = makes_duty(prev_month_duty, year, month)
         request.user.duty = duty
+        request.user.save()
         context = {
             'duties': duty,
         }

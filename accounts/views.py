@@ -13,8 +13,8 @@ def signup(request):
     if request.method == 'POST':
         form = NurseForm(request.POST)
         if form.is_valid():
-            form.save()
-            auth_login(request, form.get_user())
+            user = form.save()
+            auth_login(request, user)
             return redirect('calendars:main')
     else:
         form = NurseForm()
