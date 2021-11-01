@@ -7,4 +7,5 @@ urlpatterns = [
     path('ward/', views.ward, name='ward'),
     path('apply-off/', views.apply_off, name='apply-off'),
     path('make-duty/', views.make_duty, name='make-duty'),
+    # path('teamduty/', views.team_duty, name='team_duty'),
 ]

@@ -38,8 +38,7 @@
         <ul class="navbar-nav ms-auto">
           {% if user.is_authenticated %}
             <li>
-              <form action="{% url 'calendars:make-duty' %}" method="POST">
-                {% csrf_token %}
+              <form action="{% url 'calendars:make-duty' %}" method='GET'>
                 <button class="btn btn-warning text-decoration-none text-light me-2">듀티 생성</button>
               </form>
             </li>

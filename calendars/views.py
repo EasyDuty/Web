@@ -1,20 +1,27 @@
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from .forms import ApplyOffForm
 from .algo import makes_duty
+import datetime
 
 
 @login_required
 @require_safe
 def main(request):
-    if request.user.duty:
-        duties = request.user.duty
-        context = {
-            'duties': duties,
-        }
-        return render(request, 'calendars/main.html', context)
-    return redirect('calendars:make-duty')
+    dt_now = datetime.datetime.now()
+    year = str(dt_now.year)
+    month = str(dt_now.month)
+    if request.user.duty.get(year+month):
+        duties = request.user.duty[year+month]
+    else:
+        duties = ' ' * 30
+    context = {
+        'duties': duties,
+    }
+    return render(request, 'calendars/main.html', context)
+    
 
 
 @login_required
@@ -51,7 +58,7 @@ def make_duty(request):
         month = int(request.POST['month'])
         prev_month_duty = request.POST['dd']
         duty = makes_duty(prev_month_duty, year, month)
-        request.user.duty = duty
+        request.user.duty = {str(year) + str(month) : duty}
         request.user.save()
         context = {
             'duties': duty,
@@ -60,7 +67,22 @@ def make_duty(request):
 
     else:
         pass
+        # users = get_user_model()
+        # teams = users.objects.filter(team=request.user.team)
     context = {
 
     }
     return render(request, 'calendars/make-duty.html', context)
+
+# 팀원 듀티 보는 페이지
+@login_required
+@require_safe
+def team_duty(request):
+    team = request.user.team
+    users = get_user_model()
+    teams = users.objects.filter(team=team)
+    context = {
+        'teams': teams,
+    }
+    return render(request, 'calendars/team_duty.html', context)
+
