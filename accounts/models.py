@@ -10,5 +10,5 @@ class User(AbstractUser):
     ward = models.CharField(max_length=100)
     team = models.CharField(max_length=100)
     hospital = models.CharField(max_length=100)
-    duty = models.CharField(blank=True, max_length=31)
-    
+    duty = models.JSONField(blank=True, null=True)
+    is_manager = models.BooleanField(default=False)
