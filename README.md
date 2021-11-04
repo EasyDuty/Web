@@ -1,5 +1,10 @@
 # 패치노트
 
+## 11/04
+
+* get_duty url & view함수 생성 - get_duty(request, username, year, month)
+* static 설정 추가
+
 ## 11/01
 
 * user model 구조 변경
@@ -66,8 +71,6 @@
 # 환경
 
 python 3. 9. 6
-
-django 3. 2. 7
 
 
 
