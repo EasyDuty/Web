@@ -6,6 +6,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 @require_http_methods(['GET', 'POST'])
@@ -94,3 +95,13 @@ def change_password(request):
         'form': form,
     }
     return render(request, 'accounts/change_password.html', context)
+
+
+
+def get_duty(request, username, year, month):
+    person = get_object_or_404(get_user_model(), username=username)
+    duty = person.duty.get(year+month)
+    context = {
+        'duty': duty,
+    }
+    return JsonResponse(context)
