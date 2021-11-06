@@ -13,9 +13,9 @@ def main(request):
     dt_now = datetime.datetime.now()
     year = str(dt_now.year)
     month = str(dt_now.month)
-    if request.user.duty.get(year+month):
+    try:
         duties = request.user.duty[year+month]
-    else:
+    except:
         duties = ' ' * 30
     context = {
         'duties': duties,
