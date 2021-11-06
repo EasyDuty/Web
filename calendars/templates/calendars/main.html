@@ -1,20 +1,111 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calendars/style.css' %}">
+
   <h1>{{ user.name }} 님의 DUTY!</h1>
   <hr>
-    <div class="container">
-      <div class="row">
-      {% for duty in duties %}
-        {% if forloop.counter|divisibleby:7 %}
-          <div class="border text-center" style="width: 14%; height: 100px;">{{ duty }}</div>
-          {% comment %} <div class="offset"></div> {% endcomment %}
-        {% else %}
-          <div class="border text-center" style="width: 14%; height: 100px;">{{ duty }}</div>
-        {% endif %}
-      {% endfor %}
+  <div class="calendar">
+    <div class="header">
+      <div class="nav">
+        <button class="btn btn-warning go-prev" onclick="prevMonth()">&lt;</button>
+        <div class="year-month"></div>
+        <button class="btn btn-warning go-next" onclick="nextMonth()">&gt;</button>
       </div>
+      <button class="btn btn-warning go-today" onclick="goToday()">Today</button>
     </div>
-  </article>
+    <div class="main">
+        <div class="days">
+          <div class="day">일</div>
+          <div class="day">월</div>
+          <div class="day">화</div>
+          <div class="day">수</div>
+          <div class="day">목</div>
+          <div class="day">금</div>
+          <div class="day">토</div>
+        </div>
+        <div class="dates"></div>
+    </div>
+  </div>
 {% endblock content %}
+
+{% block script %}
+  <script>
+  // 날짜 정보
+  let date = new Date()
+  // 달력 만들기 함수
+  const renderCalendar = () => {
+    const viewYear = date.getFullYear()
+    const viewMonth = date.getMonth()
+    // 지난달, 이번달의 마지막 날 정보
+    const prevLast = new Date(viewYear, viewMonth, 0)
+    const thisLast = new Date(viewYear, viewMonth + 1, 0)
+    // 일, 요일(지난달)
+    const PLDate = prevLast.getDate()
+    const PLDay = prevLast.getDay()
+    // 일, 요일(이번달)
+    const TLDate = thisLast.getDate()
+    const TLDay = thisLast.getDay()
+
+    // 날짜 정보 넣을 배열
+    const prevDates = []
+    const thisDates = [...Array(TLDate + 1).keys()].slice(1)
+    const nextDates = []
+    // 배열에 날짜 입력
+    if (PLDay !== 6) {
+      for (let i = 0; i < PLDay + 1; i++) {
+        prevDates.unshift(PLDate - i)
+      }
+    }
+    for (let i = 1; i < 7 - TLDay; i++) {
+      nextDates.push(i)
+    }
+    const dates = prevDates.concat(thisDates, nextDates)
+    // 이번 달인지 아닌지 구분해서 투명도
+    const firstDateIndex = dates.indexOf(1)
+    const lastDateIndex = dates.lastIndexOf(TLDate)
+    dates.forEach((date, i) => {
+      const condition = i >= firstDateIndex && i < lastDateIndex + 1
+                        ? 'this'
+                        : 'other'
+
+      dates[i] = `<div class="date"><span class="${condition}">${date}</span></div>`
+    })
+    document.querySelector('.dates').innerHTML = dates.join('')
+    document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`
+    
+    // 오늘 날짜 표시
+    const today = new Date();
+    if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+      for (let date of document.querySelectorAll('.this')) {
+        if (+date.innerText === today.getDate()) {
+          date.classList.add('today')
+          break;
+        }
+      }
+    }
+    
+  }
+  renderCalendar()
+  // 저번 달 달력
+  const prevMonth = () => {
+    date.setMonth(date.getMonth() - 1)
+    renderCalendar()
+  }
+  // 다음 달 달력
+  const nextMonth = () => {
+    date.setMonth(date.getMonth() + 1)
+    renderCalendar()
+  }
+  // 오늘로 이동
+  const goToday = () => {
+    date = new Date()
+    renderCalendar()
+  }
+  
+
+  // 년월 입력
+  </script>
+{% endblock script %}

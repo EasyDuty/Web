@@ -13,6 +13,7 @@ def main(request):
     dt_now = datetime.datetime.now()
     year = str(dt_now.year)
     month = str(dt_now.month)
+    print(year+month)
     if request.user.duty.get(year+month):
         duties = request.user.duty[year+month]
     else:
