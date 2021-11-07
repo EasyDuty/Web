@@ -18,13 +18,10 @@
       <button class="btn btn-warning go-today" onclick="goToday()">Today</button>
     </div>
     <div class="mt-3">
-      <span class="mx-2"><div class="box" id="D"></div>Day 1</span>
-      <span class="mx-2"><span class="box" id="E"></span>Evening 2</span>
-      <span class="mx-2"><span class="box" id="N"></span>Night 3</span>
-      <span class="mx-2"><span class="box border border-dark" id="O"></span>Off 4</span>
-      {% comment %} <span class="mx-1">{{ duty-count-d }}d</span>
-      <span class="mx-1">{{ duty-count-e }}e</span>
-      <span class="mx-1">{{ duty-count-n }}n</span> {% endcomment %}
+      <span class="mx-2"><div class="box" id="D"></div>Day {{ duty_count_d }}</span>
+      <span class="mx-2"><span class="box" id="E"></span>Evening {{ duty_count_e }}</span>
+      <span class="mx-2"><span class="box" id="N"></span>Night {{ duty_count_n }}</span>
+      <span class="mx-2"><span class="box border border-dark" id="O"></span>Off {{ duty_count_o }}</span>
     </div>
     <div class="main">
       <div class="days">
@@ -99,10 +96,13 @@
       url: `http://127.0.0.1:8000/accounts/${personUsername}/duty/${viewYear}/${viewMonth}/`,
     })
       .then(response => {
+        console.log('!!!!!!!!!!!!')
+        console.log(response)
         // 듀티 달력에 넣기
         const duty = response.data.duty
         console.log(duty)
-        return 'OEDNEODNEODNEOENDODODENEDNEOD'
+        // return duty
+        return 'OEDNEODNEODNEOENDODODENEDDNEOD'
       })
       .then(duty => {
         // 배열에 날짜, 듀티 입력

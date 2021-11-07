@@ -14,17 +14,23 @@
         <div class="year-month"></div>
         <button class="btn btn-warning go-next" onclick="nextMonth()">&gt;</button>
       </div>
-      <button>듀티 생성</button>
+      {% if user.is_staff %}
+        <button class="btn btn-light my-color" id="make-duty">듀티 생성</button>
+      {% endif %}
       {% comment %} <button class="btn btn-warning go-today" onclick="goToday()">Today</button> {% endcomment %}
     </div>
     <div class="main">
-      <div class="days"></div>
-      <div class="dates"></div>
-      {{ wards }}
-      {% for nurse in wards %}
-        <span>{{ nurse.name }}</span>
-        <div class="duties">듀티</div>
-      {% endfor %}
+      <div class="team-calendar">
+        <div class="days"></div>
+        <div class="dates"></div>
+        <div class="duties">
+          {% for nurse in myWard %}
+            <div class="duty">
+              <a class="text-decoration-none my-color" href="{% url 'calendars:main' %}">{{ nurse.name }}</a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 {% endblock content %}

@@ -31,6 +31,7 @@
           </form>
         </div>
         <a class="nav-item nav-link btn my-auto" href="{% url 'calendars:ward_duty' %}">병동 듀티</a>
+        <a class="nav-item nav-link btn my-auto" href="{% url 'calendars:main' %}">내 듀티</a>
       {% else %}
         <a class="nav-item nav-link btn my-auto" href="{% url 'accounts:login' %}">로그인</a>
         <a class="nav-item nav-link btn my-auto" href="{% url 'accounts:signup' %}">회원가입</a>

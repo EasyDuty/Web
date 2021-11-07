@@ -16,13 +16,13 @@ def main(request):
     try:
         duties = request.user.duty[year+month]
     except:
-        duties = ' ' * 31
+        duties = '' * 31
     context = {
         'duties': duties,
-        'duty-count-d': duties.count('D'),
-        'duty-count-e': duties.count('E'),
-        'duty-count-n': duties.count('N'),
-        'duty-count-o': duties.count('O'),
+        'duty_count_d': duties.count('D'),
+        'duty_count_e': duties.count('E'),
+        'duty_count_n': duties.count('N'),
+        'duty_count_o': duties.count('O'),
     }
     return render(request, 'calendars/main.html', context)
     
@@ -106,6 +106,7 @@ def ward_duty(request):
     ward = request.user.ward
     users = get_user_model()
     wards = users.objects.filter(ward=ward)
+    print(wards)
     context = {
         'myWard': wards,
     }
