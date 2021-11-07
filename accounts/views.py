@@ -72,7 +72,7 @@ def update(request):
     return render(request, 'accounts/update.html', context)
 
 
-
+@require_http_methods(['GET', 'POST'])
 def profile(request, username):
     person = get_object_or_404(get_user_model(), username=username)
     context = {
@@ -97,7 +97,7 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
-
+@require_http_methods(['GET', 'POST'])
 def get_duty(request, username, year, month):
     person = get_object_or_404(get_user_model(), username=username)
     duty = person.duty.get(year+month)
