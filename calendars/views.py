@@ -49,32 +49,48 @@ def apply_off(request):
 @require_http_methods(['GET', 'POST'])
 def make_duty(request):
     if request.method=='POST':
+        team_num = 3
+        people = 6
+        dt_now = datetime.datetime.now()
         year = int(request.POST['year'])
         month = int(request.POST['month'])
+
+        # 저번 달 정보 불러오기
         if month == 1:
             key = str(year-1) + '12'
         else:
             key = str(year) + str(month-1)
         users = get_user_model()
-        myTeam = users.objects.filter(team=request.user.team)
-        last_duties = []
-        for i in range(6):
-            try:
+        myWard = users.objects.filter(ward=request.user.ward)
+        teams = []
+
+
+       # 병동에 있는 팀 목록 생성
+        for i in myWard:
+            if i.team in teams:
+                continue
+            else:
+                teams.append(i.team)
+        for t in range(team_num):
+            myTeam = users.objects.filter(team=teams[t], ward=request.user.ward)
+            last_duties = []
+            careers = []
+            for i in range(6):
+                try:
+                    person = myTeam[i]
+                    last_duties.append(person.duty.get(key)[-2:])
+                except:
+                    last_duties.append('OO')
+                careers.append(dt_now.year - int(person.career[:4]))
+
+        # 듀티 생성
+            duties = get_schedule(last_duties, year, month)
+            for i in range(people):
                 person = myTeam[i]
-                last_duties.append(person.duty.get(key)[-2:])
-            except:
-                last_duties.append('OO')
-        # prev_month_duty = request.POST['dd']
-        duties = get_schedule(last_duties, year, month)
-        for i in range(6):
-            person = myTeam[i]
-            person.duty = {str(year) + str(month) : duties[i]}
-            person.save()
-        # context = {
-        #     'duties': duties,
-        #     'myTeam': myTeam,
-        # }
+                person.duty = {str(year) + str(month) : duties[i]}
+                person.save()
         return redirect('calendars:main')
+
 
     else:
         pass
