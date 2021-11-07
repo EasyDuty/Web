@@ -7,6 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+import datetime
 
 
 @require_http_methods(['GET', 'POST'])
@@ -105,3 +106,22 @@ def get_duty(request, username, year, month):
         'duty': duty,
     }
     return JsonResponse(context)
+
+
+def view_duty(request, user_pk):
+    person = get_object_or_404(get_user_model(), pk=user_pk)
+    dt_now = datetime.datetime.now()
+    year = str(dt_now.year)
+    month = str(dt_now.month)
+    try:
+        duties = person.duty[year+month]
+    except:
+        duties = ' ' * 31
+    context = {
+        'duties': duties,
+        'duty-count-d': duties.count('D'),
+        'duty-count-e': duties.count('E'),
+        'duty-count-n': duties.count('N'),
+        'duty-count-o': duties.count('O'),
+    }
+    return render(request, 'accounts/view_duty.html', context)
