@@ -124,7 +124,7 @@
                             ? 'this'
                             : 'other'
           // 이번달이면 듀티 입력
-          if (condition === 'this') {
+          if (condition === 'this' && duty) {
             dates[i] = `<div type="button" 
             class="date btn" id="${duty[0]}" 
             data-toggle="modal" 
@@ -161,10 +161,8 @@
 
     // Modal Content
     $('#exampleModal').on('show.bs.modal', function (event) {
-      const button = $(event.relatedTarget) // Button that triggered the modal
-      const title = button.data('title') // Extract info from data-* attributes
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      const button = $(event.relatedTarget)
+      const title = button.data('title')
       const modal = $(this)
       modal.find('.modal-title').text(title + '의 근무자')
     })

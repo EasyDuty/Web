@@ -46,9 +46,10 @@ def apply_off(request):
 
 
 @login_required
-@require_http_methods(['GET', 'POST'])
-def make_duty(request):
+@require_http_methods(['POST'])
+def make_duty(request, year, month):
     if request.method=='POST':
+        print('aaaaaaaaaaa')
         team_num = 3
         people = 6
         dt_now = datetime.datetime.now()
@@ -89,15 +90,9 @@ def make_duty(request):
                 person = myTeam[i]
                 person.duty = {str(year) + str(month) : duties[i]}
                 person.save()
-        return redirect('calendars:main')
-
-
-    else:
-        pass
-    context = {
-        
-    }
-    return render(request, 'calendars/make-duty.html', context)
+        return redirect('calendars:make_duty')
+    return
+    
 
 # 병동 듀티 보는 페이지
 @login_required
@@ -106,7 +101,6 @@ def ward_duty(request):
     ward = request.user.ward
     users = get_user_model()
     wards = users.objects.filter(ward=ward)
-    print(wards)
     context = {
         'myWard': wards,
     }
