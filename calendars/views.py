@@ -84,7 +84,7 @@ def make_duty(request):
                 careers.append(dt_now.year - int(person.career[:4]))
 
         # 듀티 생성
-            duties = get_schedule(last_duties, year, month)
+            duties = get_schedule(last_duties, year, month, careers)
             for i in range(people):
                 person = myTeam[i]
                 person.duty = {str(year) + str(month) : duties[i]}
