@@ -16,21 +16,12 @@ def main(request):
     try:
         duties = request.user.duty[year+month]
     except:
-        duties = ' ' * 30
+        duties = ' ' * 31
     context = {
         'duties': duties,
     }
     return render(request, 'calendars/main.html', context)
     
-
-
-@login_required
-def ward(request):
-    context = {
-
-    }
-    return render(request, 'claender/ward.html', context)
-
 
 @login_required
 @require_http_methods(['GET', 'POST'])
@@ -56,33 +47,47 @@ def make_duty(request):
     if request.method=='POST':
         year = int(request.POST['year'])
         month = int(request.POST['month'])
-        prev_month_duty = request.POST['dd']
-        duty = makes_duty(prev_month_duty, year, month)
-        request.user.duty = {str(year) + str(month) : duty}
-        request.user.save()
-        context = {
-            'duties': duty,
-        }
+        if month == 1:
+            key = str(year-1) + '12'
+        else:
+            key = str(year) + str(month-1)
+        users = get_user_model()
+        myTeam = users.objects.filter(team=request.user.team)
+        last_duties = []
+        for i in range(6):
+            try:
+                person = myTeam[i]
+                last_duties.append(person.duty.get(key)[-2:])
+            except:
+                last_duties.append('OO')
+        # prev_month_duty = request.POST['dd']
+        duties = makes_duty(last_duties, year, month)
+        for i in range(6):
+            person = myTeam[i]
+            person.duty = {str(year) + str(month) : duties[i]}
+            person.save()
+        # context = {
+        #     'duties': duties,
+        #     'myTeam': myTeam,
+        # }
         return redirect('calendars:main')
 
     else:
         pass
-        # users = get_user_model()
-        # teams = users.objects.filter(team=request.user.team)
     context = {
-
+        
     }
     return render(request, 'calendars/make-duty.html', context)
 
-# 팀원 듀티 보는 페이지
+# 병동 듀티 보는 페이지
 @login_required
 @require_safe
-def team_duty(request):
-    team = request.user.team
+def ward_duty(request):
+    ward = request.user.ward
     users = get_user_model()
-    teams = users.objects.filter(team=team)
+    wards = users.objects.filter(ward=ward)
     context = {
-        'teams': teams,
+        'myWard': wards,
     }
-    return render(request, 'calendars/team_duty.html', context)
+    return render(request, 'calendars/ward-duty.html', context)
 
