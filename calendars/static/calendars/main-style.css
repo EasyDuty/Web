@@ -87,3 +87,26 @@ article {
   transform: translate(-50%, -50%);
   content: '';
 }
+#D {
+  background-color: #b7eaee;
+}
+#E {
+  background-color: #d1f0ca;
+}
+#N {
+  background-color: #e2c9fa;
+}
+#O {
+  background-color: white;
+}
+.calendar-duty {
+  text-align: center;
+  font-size: 25px;
+}
+.box {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: auto 5px;
+}

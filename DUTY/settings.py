@@ -122,7 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    'calendars/static'
+    BASE_DIR / 'static/',
+    'calendars/static',
 ]
 
 # Default primary key field type

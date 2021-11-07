@@ -1,0 +1,14 @@
+article {
+  margin: 100px auto;
+}
+.my-navbar {
+  background-color: #ff7f00;
+}
+#my-color,
+.my-color {
+  color: #ff7f00;
+}
+.hamburger {
+  background-color: #ff7f00;
+  opacity: .3;
+}

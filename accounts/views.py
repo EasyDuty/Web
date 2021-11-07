@@ -100,7 +100,10 @@ def change_password(request):
 @require_http_methods(['GET', 'POST'])
 def get_duty(request, username, year, month):
     person = get_object_or_404(get_user_model(), username=username)
-    duty = person.duty.get(year+month)
+    try:
+        duty = person.duty.get(year+month)
+    except:
+        duty = ' ' * 31
     context = {
         'duty': duty,
     }
