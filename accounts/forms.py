@@ -25,6 +25,9 @@ class NurseForm(UserCreationForm):
             'team',
             'hospital',
         )
+        labels = {
+            'username': ('ID'),
+        }
         
 
 class NurseChangeForm(UserChangeForm):
