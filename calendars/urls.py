@@ -7,5 +7,6 @@ urlpatterns = [
     path('ward/', views.ward, name='ward'),
     path('apply-off/', views.apply_off, name='apply-off'),
     path('make-duty/', views.make_duty, name='make-duty'),
-    # path('teamduty/', views.team_duty, name='team_duty'),
+    path('teamduty/', views.team_duty, name='team_duty'),
+    # teamduty말고 wardduty로 변경부탁드립니다
 ]

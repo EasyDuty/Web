@@ -1,6 +1,6 @@
 
 hr {
-  background-color: orange;
+  background-color: #fcaf3d;
 }
 article {
   margin: 140px 0px;
@@ -33,7 +33,7 @@ article {
   display: inline;
   font-weight: bold;
   font-size: 30px;
-  color: darkorange;
+  color: #fcaf3d;
   margin: 0px 25px;
   top: 10px;
 }

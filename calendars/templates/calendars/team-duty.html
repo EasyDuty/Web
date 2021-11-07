@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calendars/team-duty-style.css' %}">
+
+  <h1>{{ ward }}병동의 DUTY!</h1>
+  <hr>
+  <div class="calendar">
+    <div class="header">
+      <div class="nav">
+        <button class="btn btn-warning go-prev" onclick="prevMonth()">&lt;</button>
+        <div class="year-month"></div>
+        <button class="btn btn-warning go-next" onclick="nextMonth()">&gt;</button>
+      </div>
+      {% comment %} <button class="btn btn-warning go-today" onclick="goToday()">Today</button> {% endcomment %}
+    </div>
+    <div class="main">
+      <div class="days"></div>
+      <div class="dates"></div>
+      {{ wards }}
+      {% for nurse in wards %}
+        <span>{{ nurse.name }}</span>
+        <div class="duties">듀티</div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
+
+{% block script %}
+  <script>
+  // 날짜 정보
+  let date = new Date()
+  // 달력 만들기 함수
+  const renderCalendar = () => {
+    const viewYear = date.getFullYear()
+    const viewMonth = date.getMonth()
+    console.log(viewYear, viewMonth)
+    // 이번달의 첫 번째날, 마지막 날 정보
+    const thisFirst = new Date(viewYear, viewMonth, 1)
+    const thisLast = new Date(viewYear, viewMonth + 1, 0)
+    console.log(thisFirst, thisLast)
+    const TFDate = thisFirst.getDate() // 일
+    const TFDay = thisFirst.getDay() // 요일
+    const TLDate = thisLast.getDate()
+    console.log(TFDate, TFDay, TLDate)
+
+    // 날짜 정보 넣을 배열
+    const thisDates = [...Array(TFDate).keys()].slice(1)
+    const thisDays = [...Array(TFDate).keys()].slice(1)
+    const thisDuties = [...Array(TFDate).keys()].slice(1)
+    const sundayList = []
+    const saturdayList = []
+    // 배열에 날짜 입력
+    const daysList = ['일', '월', '화', '수', '목', '금', '토']
+    for (let i = 1; i <= TLDate; i++) {
+      thisDates.push(i)
+      thisDays.push(daysList[(TFDay + i - 1) % 7])
+      if ((TFDay + i - 1) % 7 === 0) {
+        sundayList.push(i)
+      } else if ((TFDay + i - 1) % 7 === 6) {
+        saturdayList.push(i)
+      }
+      // thisDuties = ?
+    }
+    console.log(sundayList, saturdayList)
+    const dates = thisDates
+    const days = thisDays
+    const duties = thisDuties
+    console.log(dates, days, duties)
+    dates.forEach((date, i) => {
+      if (sundayList.includes(i+1)) {
+        console.log(i)
+        dates[i] = `<div class="date sunday" style="width: calc(100%/${TLDate})">${date}</div>`  
+      } else if (saturdayList.includes(i+1)) {
+        dates[i] = `<div class="date saturday" style="width: calc(100%/${TLDate})">${date}</div>`  
+      } else {
+        dates[i] = `<div class="date" style="width: calc(100%/${TLDate})">${date}</div>`
+      }
+    })
+    days.forEach((day, i) => {
+      if (sundayList.includes(i+1)) {
+        days[i] = `<div class="day sunday" style="width: calc(100%/${TLDate})">${day}</div>`  
+      } else if (saturdayList.includes(i+1)) {
+        days[i] = `<div class="day saturday" style="width: calc(100%/${TLDate})">${day}</div>`  
+      } else {
+        days[i] = `<div class="day" style="width: calc(100%/${TLDate})">${day}</div>`
+      }
+    })
+    document.querySelector('.dates').innerHTML = dates.join('')
+    document.querySelector('.days').innerHTML = days.join('')
+    // document.querySelector('.duties').innerHTML = duties.join('')
+    document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`
+  }
+  renderCalendar()
+  // 저번 달 달력
+  const prevMonth = () => {
+    date.setMonth(date.getMonth() - 1)
+    renderCalendar()
+  }
+  // 다음 달 달력
+  const nextMonth = () => {
+    date.setMonth(date.getMonth() + 1)
+    renderCalendar()
+  }
+  
+  </script>
+{% endblock script %}

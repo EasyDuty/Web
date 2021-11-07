@@ -3,7 +3,7 @@
 
 
 {% block content %}
-  <link rel="stylesheet" type="text/css" href="{% static 'calendars/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'calendars/main-style.css' %}">
 
   <h1>{{ user.name }} 님의 DUTY!</h1>
   <hr>
@@ -29,6 +29,27 @@
         <div class="dates"></div>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock content %}
 
 {% block script %}
@@ -39,15 +60,18 @@
   const renderCalendar = () => {
     const viewYear = date.getFullYear()
     const viewMonth = date.getMonth()
+    console.log(viewYear, viewMonth)
     // 지난달, 이번달의 마지막 날 정보
     const prevLast = new Date(viewYear, viewMonth, 0)
     const thisLast = new Date(viewYear, viewMonth + 1, 0)
+    console.log(prevLast, thisLast)
     // 일, 요일(지난달)
     const PLDate = prevLast.getDate()
     const PLDay = prevLast.getDay()
     // 일, 요일(이번달)
     const TLDate = thisLast.getDate()
     const TLDay = thisLast.getDay()
+    console.log(TLDate, TLDay)
 
     // 날짜 정보 넣을 배열
     const prevDates = []
@@ -63,6 +87,7 @@
       nextDates.push(i)
     }
     const dates = prevDates.concat(thisDates, nextDates)
+    console.log(dates)
     // 이번 달인지 아닌지 구분해서 투명도
     const firstDateIndex = dates.indexOf(1)
     const lastDateIndex = dates.lastIndexOf(TLDate)
@@ -71,10 +96,27 @@
                         ? 'this'
                         : 'other'
 
-      dates[i] = `<div class="date"><span class="${condition}">${date}</span></div>`
+      dates[i] = `<div type="button" 
+      class="date btn" 
+      data-toggle="modal" 
+      data-target="#exampleModal" 
+      data-title="${viewMonth}월 ${date}일">
+      <span class="${condition}">${date}</span>
+      </div>`
     })
+    
     document.querySelector('.dates').innerHTML = dates.join('')
     document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`
+    
+    // Model Content
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      const button = $(event.relatedTarget) // Button that triggered the modal
+      const title = button.data('title') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      const modal = $(this)
+      modal.find('.modal-title').text(title + '의 근무자')
+    })
     
     // 오늘 날짜 표시
     const today = new Date();
@@ -104,8 +146,5 @@
     date = new Date()
     renderCalendar()
   }
-  
-
-  // 년월 입력
   </script>
 {% endblock script %}

@@ -85,5 +85,6 @@ def team_duty(request):
     context = {
         'teams': teams,
     }
-    return render(request, 'calendars/team_duty.html', context)
+    # team-duty 말고 ward-duty로 변경 부탁드립니다
+    return render(request, 'calendars/team-duty.html', context)
 
