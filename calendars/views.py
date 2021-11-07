@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
@@ -110,4 +111,26 @@ def ward_duty(request):
         'myWard': wards,
     }
     return render(request, 'calendars/ward-duty.html', context)
+
+
+def worker(request, year, month, day):
+    users = get_user_model()
+    myTeam = users.objects.filter(team=request.user.team)
+    work = ['D'] * 3
+    for i in range(6):
+        person = myTeam[i]
+        try:
+            now = person.duty.get(str(year) + str(month+1))[day-1]
+            if now == 'D':
+                work[0] == person.name
+            elif now == 'E':
+                work[1] == person.name
+            elif now == 'N':
+                work[2] == person.name
+        except:
+            pass
+    context = {
+        'work': work,
+    }
+    return JsonResponse(context)
 
