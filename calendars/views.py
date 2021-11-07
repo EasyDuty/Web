@@ -19,6 +19,10 @@ def main(request):
         duties = ' ' * 31
     context = {
         'duties': duties,
+        'duty-count-d': duties.count('D'),
+        'duty-count-e': duties.count('E'),
+        'duty-count-n': duties.count('N'),
+        'duty-count-o': duties.count('O'),
     }
     return render(request, 'calendars/main.html', context)
     
