@@ -3,7 +3,7 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import ApplyOffForm
-from .algo import makes_duty
+from .algo_team_day_first import get_schedule
 import datetime
 
 
@@ -65,7 +65,7 @@ def make_duty(request):
             except:
                 last_duties.append('OO')
         # prev_month_duty = request.POST['dd']
-        duties = makes_duty(last_duties, year, month)
+        duties = get_schedule(last_duties, year, month)
         for i in range(6):
             person = myTeam[i]
             person.duty = {str(year) + str(month) : duties[i]}
