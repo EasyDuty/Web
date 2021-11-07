@@ -1,5 +1,15 @@
 # 패치노트
 
+## 11/07
+
+* 병동 듀티 확인 페이지 생성
+* make_duty 함수 수정 -> 1인 생성에서 팀 생성으로
+
+## 11/06
+
+* 메인페이지에서 듀티가 없는 경우 에러가 뜨는 것 수정
+* 어드민 생성 시 오류 수정
+
 ## 11/04
 
 * get_duty url & view함수 생성 - get_duty(request, username, year, month)
@@ -115,6 +125,14 @@ AbstractUser을 상속받아 유저 모델을 간호사 모델로 이용
 * AbstractUser에 상속받은 필드는 한글로 번역되어 통일성이 떨어짐
 
   forms.py에서 label을 이용해 나머지 필드도 한글로 출력해줌
+
+* createsuperuser 시 오류
+
+  not null인 자료값이 null이라고 뜨는 오류. 기본 값을 주는 것을 통해 해결하였다.
+
+* json자료에서 get 사용 시 오류
+
+  딕셔너리처럼 해당하는 자료가 없으면 None값을 준다고 생각하여 if문으로 구성하였는데, get을 사용해도 에러가 뜸을 확인. 대신 try, except문을 사용하여 해결하였다.
 
 * Date picker 구현
 

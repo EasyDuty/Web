@@ -5,8 +5,8 @@ from django.db.models.fields import CharField, IntegerField
 
 class User(AbstractUser):
     name = models.CharField(max_length=100)
-    birth = models.DateField(null=True)
-    career = models.DateField(null=True)
+    birth = models.DateField(default='2021-11-01')
+    career = models.DateField(default='2021-11-01')
     ward = models.CharField(max_length=100)
     team = models.CharField(max_length=100)
     hospital = models.CharField(max_length=100)
