@@ -81,10 +81,10 @@ def make_duty(request):
                     last_duties.append(person.duty.get(key)[-2:])
                 except:
                     last_duties.append('OO')
-                careers.append(dt_now.year - int(person.career[:4]))
+                careers.append(dt_now.year - int(person.career.year))
 
         # 듀티 생성
-            duties = get_schedule(last_duties, year, month, careers)
+            duties = get_schedule(last_duties, year, month)
             for i in range(people):
                 person = myTeam[i]
                 person.duty = {str(year) + str(month) : duties[i]}
