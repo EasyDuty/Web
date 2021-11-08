@@ -10,7 +10,7 @@ urlpatterns = [
     path('update/', views.update, name='update'),
     path('password/', views.change_password, name='change_password'),
     path('<username>/', views.profile, name='profile'),
-    path('<username>/duty/<year>/<month>/', views.get_duty, name='get_duty'),
-    path('<int:user_pk>/duty', views.view_duty, name='view_duty'),
+    path('<username>/duty/<int:year>/<int:month>/', views.get_duty, name='get_duty'),
+    path('<int:user_pk>/duty', views.show_duty, name='show_duty'),
 
 ]

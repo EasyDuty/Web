@@ -11,7 +11,7 @@ def make_day_combinations():
                 and (day_nurse != night_nurse)\
                 and (evening_nurse != night_nurse):
                     temp_combination = ['O'] * 6
-                    temp_combination[day_nurse] = 'T'
+                    temp_combination[day_nurse] = 'D'
                     temp_combination[evening_nurse] = 'E'
                     temp_combination[night_nurse] = 'N'
                     day_combinations.append(temp_combination)
@@ -22,15 +22,15 @@ def check_validity(combination, days, nurses):
     # 각 간호사에 대하여 유효성 검사
     for nurse in range(6):
         # [필수] NIGHT - OFF - DAY 설 수 없음
-        if nurses[nurse][days] == 'N' and nurses[nurse][days+1] == 'O' and combination[nurse] == 'T':
+        if nurses[nurse][days] == 'N' and nurses[nurse][days+1] == 'O' and combination[nurse] == 'D':
             return False
 
         # [필수] NIGHT - DAY, NIGHT - EVENING 설 수 없음
-        if nurses[nurse][days+1] == 'N' and (combination[nurse] == 'T' or combination[nurse] == 'E'):
+        if nurses[nurse][days+1] == 'N' and (combination[nurse] == 'D' or combination[nurse] == 'E'):
             return False
     
         # [필수] EVENING - DAY 설 수 없음
-        if nurses[nurse][days+1] == 'E' and (combination[nurse] == 'T'):
+        if nurses[nurse][days+1] == 'E' and (combination[nurse] == 'D'):
             return False
 
         # [필수] 너무 연속으로 근무하게 됨
@@ -54,7 +54,7 @@ def check_priority(nurses, combination):
         ### 각 간호사에 대하여 현재까지의 DAY, EVENING, NIGHT, OFF 일 수 계산 ###
         day_shifts = evening_shifts = night_shifts = offs = 0
 
-        if combination[nurse_idx] == 'T':
+        if combination[nurse_idx] == 'D':
             day_shifts += 1
         elif combination[nurse_idx] == 'E':
             evening_shifts += 1
@@ -64,7 +64,7 @@ def check_priority(nurses, combination):
             offs += 1
     
         for day in nurses[nurse_idx][2:]:
-            if day == 'T':
+            if day == 'D':
                 day_shifts += 1
             elif day == 'E':
                 evening_shifts += 1
@@ -89,7 +89,7 @@ def check_priority(nurses, combination):
         # DAY, EVENING, NIGHT중 어느 하나에 너무 치중되게 근무한 경우 점수 감소
         min_shifts = min(day_shifts, evening_shifts, night_shifts)  # DAY, EVENING, NIGHT 중 근무 수가 가장 적은 shift의 근무일수
         
-        if day_shifts - min_shifts > 2 and combination[nurse_idx] == 'T':
+        if day_shifts - min_shifts > 2 and combination[nurse_idx] == 'D':
                 points -= 5 * (day_shifts - min_shifts) ** 2
         elif evening_shifts - min_shifts > 2 and combination[nurse_idx] == 'E':
                 points -= 5 * (evening_shifts - min_shifts) ** 2
@@ -116,7 +116,7 @@ def make_schedule(nurses, year, month, days=0):  # 인자는 duty를 짠 일 수
 
     # 모든 근무 조합 확인
     # combination은 DAY, EVENING, NIGHT의 배치를 담은 1차원 리스트
-    # 예를 들어 ['T', 'E', 'N', 'O', 'O', 'O']는 1번 간호사가 DAY, 2번 간호사가 EVENING, 3번 간호사가 NIGHT근무임을 의미
+    # 예를 들어 ['D', 'E', 'N', 'O', 'O', 'O']는 1번 간호사가 DAY, 2번 간호사가 EVENING, 3번 간호사가 NIGHT근무임을 의미
     for combination in day_combinations:
         if check_validity(combination, days, nurses):  
             # check_priority 함수는 더 좋은 duty일수록 더 높은 값 반환

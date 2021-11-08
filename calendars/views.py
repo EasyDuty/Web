@@ -49,12 +49,10 @@ def apply_off(request):
 @require_http_methods(['POST'])
 def make_duty(request, year, month):
     if request.method=='POST':
-        print('aaaaaaaaaaa')
+        month += 1
         team_num = 3
         people = 6
         dt_now = datetime.datetime.now()
-        year = int(request.POST['year'])
-        month = int(request.POST['month'])
 
         # 저번 달 정보 불러오기
         if month == 1:
@@ -86,11 +84,12 @@ def make_duty(request, year, month):
 
         # 듀티 생성
             duties = get_schedule(last_duties, year, month)
+            # print(duties)
             for i in range(people):
                 person = myTeam[i]
                 person.duty = {str(year) + str(month) : duties[i]}
                 person.save()
-        return redirect('calendars:make_duty')
+        return redirect('calendars:ward_duty')
     return
     
 

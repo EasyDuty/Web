@@ -101,8 +101,9 @@ def change_password(request):
 @require_http_methods(['GET', 'POST'])
 def get_duty(request, username, year, month):
     person = get_object_or_404(get_user_model(), username=username)
+    month += 1
     try:
-        duty = person.duty.get(year+month)
+        duty = person.duty.get(str(year)+str(month))
     except:
         duty = ' ' * 31
     context = {
@@ -111,7 +112,7 @@ def get_duty(request, username, year, month):
     return JsonResponse(context)
 
 
-def view_duty(request, user_pk):
+def show_duty(request, user_pk):
     person = get_object_or_404(get_user_model(), pk=user_pk)
     dt_now = datetime.datetime.now()
     year = str(dt_now.year)
@@ -122,9 +123,10 @@ def view_duty(request, user_pk):
         duties = ' ' * 31
     context = {
         'duties': duties,
-        'duty-count-d': duties.count('D'),
-        'duty-count-e': duties.count('E'),
-        'duty-count-n': duties.count('N'),
-        'duty-count-o': duties.count('O'),
+        'duty_count_d': duties.count('D'),
+        'duty_count_e': duties.count('E'),
+        'duty_count_n': duties.count('N'),
+        'duty_count_o': duties.count('O'),
+        'person': person,
     }
-    return render(request, 'accounts/view_duty.html', context)
+    return render(request, 'calendars/view_duty.html', context)

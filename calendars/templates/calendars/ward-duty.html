@@ -29,7 +29,7 @@
         <div class="duties">
           {% for nurse in myWard %}
             <div class="duty">
-              <a class="text-decoration-none my-color" href="{% url 'calendars:main' %}">{{ nurse.name }}</a>
+              <a class="text-decoration-none my-color" href="{% url 'accounts:show_duty' nurse.pk %}" id="nurse-{{ nusrse.pk }}" data-nurse-id="{{ nurse.pk }}">{{ nurse.name }}</a>
             </div>
           {% endfor %}
         </div>
@@ -74,7 +74,9 @@
       } else if ((TFDay + i - 1) % 7 === 6) {
         saturdayList.push(i)
       }
-      // thisDuties = ?
+      const nurseId = document.querySelector()
+      const nurse = document.querySelector(`#nurse-${nursepk}`)
+      // thisDuties.push(
     }
     console.log(sundayList, saturdayList)
     const dates = thisDates
@@ -129,8 +131,7 @@
       headers: {'X-CSRFToken': csrftoken},
     })
       .then(response => {
-        console.log(response.target)
-        console.log('!!!!!!!!!!')
+        console.log(response.data)
       })
       .catch(error => {
         if (error.response.status === 500) {

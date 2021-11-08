@@ -5,8 +5,8 @@
 {% block content %}
   <link rel="stylesheet" type="text/css" href="{% static 'calendars/main-style.css' %}">
 
-  <div id="user-info" data-person-username="{{ user.username }}"></div>
-  <h1>{{ user.name }} 님의 DUTY!</h1>
+  <div id="user-info" data-person-username="{{ person.username }}"></div>
+  <h1>{{ person.name }}님의 DUTY!</h1>
   <hr>
   <div class="calendar">
     <div class="header">
@@ -147,7 +147,6 @@
         document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`
       })
       .catch(error => {
-        console.log(error)
         if (error.response.status === 404) {
               console.log('No person')
             }
@@ -155,22 +154,8 @@
               console.log('No duty')
             }
       })
-      .finally({
-         // 오늘 날짜 표시
-        const today = new Date();
-        console.log('?????????')
-        console.log(viewMonth, viewYear, today.getMonth(), today.getFullYear())
-        if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-          console.log('!!!!!!!!!')
-          for (let date of document.querySelectorAll('.this')) {
-            if (+date.innerText === today.getDate()) {
-              date.classList.add('today')
-              break;
-            }
-          }
-        }
 
-      })
+    
 
     // Modal Content
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -178,20 +163,11 @@
       const title = button.data('title')
       const modal = $(this)
       modal.find('.modal-title').text(title + '의 근무자')
-      modal.find('.modal-body').text(
-        `Day : 
-        Evening :  
-        Night :`
-        )
-      
     })
     
     // 오늘 날짜 표시
     const today = new Date();
-    console.log('?????????')
-    console.log(viewMonth, viewYear, today.getMonth(), today.getFullYear())
     if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-      console.log('!!!!!!!!!')
       for (let date of document.querySelectorAll('.this')) {
         if (+date.innerText === today.getDate()) {
           date.classList.add('today')
@@ -200,6 +176,7 @@
       }
     }
 
+    
   }
   renderCalendar()
   // 저번 달 달력
